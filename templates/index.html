@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/styles.css">
+
+        <title>Message App</title>
+    </head>
+    <body>
+        
+        <div id="messages"></div>
+        
+        <div class="messagebox-wrapper">
+            <form action="" id="message-form">
+                <input type="text" name="username" class="input-field" id="usernamebox" placeholder="Username" autocomplete="off">
+                <input type="text" name="message" class="input-field" id="messagebox" placeholder="Type a message..." autocomplete="off">
+                <input type="submit" id="send-button">
+            </form>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+        <script>
+            var socket = io();
+
+            var messages = document.getElementById("messages")
+            var form = document.getElementById("message-form");
+            var usernameInput = document.getElementById("usernamebox")
+            var messageInput = document.getElementById("messagebox");
+            
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                if (usernameInput.value && messageInput.value) {
+                    socket.emit("chat message", usernameInput.value, messageInput.value);
+                    messageInput.value = "";
+                }
+            });
+
+            socket.on("user connected", function() {
+                var messageItem = document.createElement("div");
+                messageItem.className = "message-wrapper";
+                
+                var messageDate = document.createElement("div");
+                messageDate.className = "message-time-sent";
+                const currentDate = new Date();
+                messageDate.innerText = currentDate.toLocaleTimeString();
+                messageItem.append(messageDate);
+
+                var messageContent = document.createElement("div");
+                messageContent.className = "message-content";
+                messageContent.innerText = "A user has connected";
+                messageItem.append(messageContent);
+
+                messages.append(messageItem);
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            socket.on("user disconnected", function() {
+                var messageItem = document.createElement("div");
+                messageItem.className = "message-wrapper";
+                
+                var messageDate = document.createElement("div");
+                messageDate.className = "message-time-sent";
+                const currentDate = new Date();
+                messageDate.innerText = currentDate.toLocaleTimeString();
+                messageItem.append(messageDate);
+
+                var messageContent = document.createElement("div");
+                messageContent.className = "message-content";
+                messageContent.innerText = "A user has disconnected";
+                messageItem.append(messageContent);
+
+                messages.append(messageItem);
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            socket.on("chat message", function([username, msg]) {
+                var messageItem = document.createElement("div");
+                messageItem.className = "message-wrapper";
+                
+                var messageDate = document.createElement("div");
+                messageDate.className = "message-time-sent";
+                const currentDate = new Date();
+                messageDate.innerText = currentDate.toLocaleTimeString();
+                messageItem.append(messageDate);
+
+                var messageAuthor = document.createElement("div");
+                messageAuthor.className = "message-author";
+                messageAuthor.innerText = username;
+                messageItem.append(messageAuthor);
+
+                var messageContent = document.createElement("div");
+                messageContent.className = "message-content";
+                messageContent.innerText = msg;
+                messageItem.append(messageContent);
+
+                messages.append(messageItem);
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+        </script>
+    </body>
+</html>
