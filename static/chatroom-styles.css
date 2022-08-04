@@ -24,7 +24,6 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: white;
     border-radius: 1rem;
 }
 
@@ -39,42 +38,75 @@
 
 :root {
     --max-line-height: 2.5em;
+    --light-blue: rgb(239, 241, 255);
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
+    /* overflow: hidden; */
+    min-height: 100vh;
     font-size: 1rem;
     box-sizing: border-box;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: rgb(235, 237, 247);
 }
 
-p {
-    color: black;
+h1 {
+    font-family: "Maven Pro Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p, label {
+    font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#messages {
+    padding: 0;
+    align-self: stretch;
+    flex-grow: 100;
 }
 
 .message-wrapper {
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
-    flex-flow: row nowrap;
-    align-items: flex-start;
+    flex-flow: column nowrap;
     column-gap: 0.5em;
-    padding: 0.12em 0.7em; /*First value is top & bottom, second is left and right*/
+    padding: 0.45em 0.7em;
     font-size: 1em;
     transition: background-color 100ms;
 }
 
+.message-wrapper-left-aligned {
+    align-items: flex-start;
+}
+
+.message-wrapper-right-aligned {
+    align-items: flex-end;
+}
+
 .message-wrapper:hover {
-    background-color: rgb(230, 230, 230);
+    background-color: rgba(198, 198, 228, 0.3);
 }
 
 .message-metadata {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
+    align-items: baseline;
     column-gap: 0.5em;
     width: max-content;
     min-width: calc(1em * 8);
-    /* border: 0.2em solid red; */
+}
+
+.message-metadata-left-aligned {
+    justify-content: flex-start;
+}
+
+.message-metadata-right-aligned {
+    justify-content: flex-end;
 }
 
 .message-time-sent {
@@ -87,44 +119,69 @@ p {
 .message-author {
     font-family: "Maven Pro Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1em;
-    min-width: max-content;
+    max-width: max-content;
     line-height: calc(var(--max-line-height) - 1em);
     word-break: break-word;
 }
 
 .message-content {
-    width: max-content;
+    width: fit-content;
     font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 1em;
+    font-size: 0.9em;
     line-height: calc(var(--max-line-height) - 1em);
     word-break: break-word;
-    /* border: 0.2em solid red; */
+    padding: 0.5em 0.75em;
+    background-color: rgba(239, 241, 255, 0.55);
+    box-shadow: 0em 0.01em 1em 0.5em rgba(213, 215, 228, 0.5);
+    backdrop-filter: blur(1em);
+    -webkit-backdrop-filter: blur(1em);
+    border: 0.1em solid rgba(255, 255, 255, 0.2);
+    border-radius: 1em;
+}
+
+.message-content-left-aligned {
+    border-top-left-radius: 0;
+}
+
+.message-content-right-aligned {
+    border-top-right-radius: 0;
+    background-color: rgba(198, 198, 228, 0.55);
+}
+
+
+.messagebox-wrapper {
+    min-height: none;
+    flex-grow: 1;
+    background-color: rgba(239, 241, 255, 0.5);
+    backdrop-filter: blur(0.2em);
+    -webkit-backdrop-filter: blur(0.2em);
+    border-top: 0.1em solid rgba(255, 255, 255, 0.2);
+    position: sticky;
+    bottom: 0;   
 }
 
 #message-form {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 0.3em;
-    padding: 0.08em 1em;
-
+    column-gap: 0.5em;
+    padding: 1em 0.8em;
 }
 
 .input-field {
-    background-color: lightgray;
+    background-color: rgb(213, 215, 228);
     width: 20em;
-    margin: 0.2em;
     padding: 0.5em 0.8em;
     border: 0;
     border-radius: 0.5em;
-    outline: 0 solid rgba(211, 211, 211, 0);
+    outline: 0 solid rgba(0, 0, 0, 0);
     font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    transition: 100ms;
+    transition: 150ms;
 }
 
 .input-field:focus{
-    outline: 0.2em solid rgba(200, 200, 200, 0.5);
+    outline: 0.3em solid rgba(142, 142, 228, 0.7);
 }
 
 #usernamebox {
@@ -140,15 +197,15 @@ p {
     font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     border: 0;
     border-radius: 0.2em;
-    outline: 0 solid rgba(180, 180, 180, 0);
-    background-color: lightgray;
+    outline: 0 solid rgba(0, 0, 0, 0);
+    background-color: rgb(213, 215, 228);
     transition: outline 100ms, background-color 500ms;
 }
 
 #send-button:focus {
-    outline: 0.3em solid rgba(200, 200, 200, 0.5);
+    outline: 0.3em solid rgba(142, 142, 228, 0.7);
 }
 
 #send-button:hover {
-    background-color: rgb(180, 180, 180);
+    background-color: rgb(180, 180, 228);
 }

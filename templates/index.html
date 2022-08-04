@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="/static/chatroom-styles.css">
 
         <title>Message App</title>
     </head>
@@ -16,7 +16,7 @@
             <form action="" id="message-form">
                 <input type="text" name="username" class="input-field" id="usernamebox" placeholder="Username" autocomplete="off">
                 <input type="text" name="message" class="input-field" id="messagebox" placeholder="Type a message..." autocomplete="off">
-                <input type="submit" id="send-button">
+                <input type="submit" id="send-button" value="Send">
             </form>
         </div>
 
@@ -30,76 +30,90 @@
             var usernameInput = document.getElementById("usernamebox")
             var messageInput = document.getElementById("messagebox");
             
+            let roomID = null;
+            let disconnectMessageReceived = false;
+
+            function sendMessage(author, content, alignment) {
+                var messageItem = document.createElement("div");
+                messageItem.className = "message-wrapper";
+
+                var messageMetadata = document.createElement("div");
+                messageMetadata.className = "message-metadata";
+                
+                if (author) {
+                    // omitted if it's a system message
+                    var messageAuthor = document.createElement("div");
+                    messageAuthor.className = "message-author";
+                    messageAuthor.innerText = author;
+                    messageMetadata.append(messageAuthor);
+                }
+
+                var messageDate = document.createElement("div");
+                messageDate.className = "message-time-sent";
+                const currentDate = new Date();
+                messageDate.innerText = currentDate.toLocaleTimeString();
+                messageMetadata.append(messageDate);
+
+                messageItem.append(messageMetadata);
+
+                var messageContent = document.createElement("div");
+                messageContent.className = "message-content";
+                messageContent.innerText = content;
+                messageItem.append(messageContent);
+                
+                if (alignment === "right") {
+                    messageItem.classList.add("message-wrapper-right-aligned");
+                    messageMetadata.classList.add("message-metadata-right-aligned");
+                    messageContent.classList.add("message-content-right-aligned");
+                } else {
+                    messageItem.classList.add("message-wrapper-left-aligned");
+                    messageMetadata.classList.add("message-metadata-left-aligned");
+                    messageContent.classList.add("message-content-left-aligned");
+                }
+
+                messages.append(messageItem);
+
+                if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - (messageItem.offsetHeight + form.offsetHeight)) {
+                    // scroll to bottom of page if user is scrolled to the most recent message
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
+            }
+
             form.addEventListener("submit", function(e) {
                 e.preventDefault();
 
                 if (usernameInput.value && messageInput.value) {
-                    socket.emit("chat message", usernameInput.value, messageInput.value);
+                    sendMessage("You", messageInput.value, "right");
+
+                    socket.emit("chat message", roomID, usernameInput.value, messageInput.value);
                     messageInput.value = "";
                 }
             });
 
-            socket.on("user connected", function() {
-                var messageItem = document.createElement("div");
-                messageItem.className = "message-wrapper";
-                
-                var messageDate = document.createElement("div");
-                messageDate.className = "message-time-sent";
-                const currentDate = new Date();
-                messageDate.innerText = currentDate.toLocaleTimeString();
-                messageItem.append(messageDate);
-
-                var messageContent = document.createElement("div");
-                messageContent.className = "message-content";
-                messageContent.innerText = "A user has connected";
-                messageItem.append(messageContent);
-
-                messages.append(messageItem);
-                window.scrollTo(0, document.body.scrollHeight);
+            socket.on("connect user", function() {
+                roomID = window.location.pathname.replace("/room/", "");
+                socket.emit("join room", roomID);
             });
 
-            socket.on("user disconnected", function() {
-                var messageItem = document.createElement("div");
-                messageItem.className = "message-wrapper";
-                
-                var messageDate = document.createElement("div");
-                messageDate.className = "message-time-sent";
-                const currentDate = new Date();
-                messageDate.innerText = currentDate.toLocaleTimeString();
-                messageItem.append(messageDate);
-
-                var messageContent = document.createElement("div");
-                messageContent.className = "message-content";
-                messageContent.innerText = "A user has disconnected";
-                messageItem.append(messageContent);
-
-                messages.append(messageItem);
-                window.scrollTo(0, document.body.scrollHeight);
+            socket.on("join message", function() {
+                sendMessage("", "A user has joined the chat", "left");
             });
 
-            socket.on("chat message", function([username, msg]) {
-                var messageItem = document.createElement("div");
-                messageItem.className = "message-wrapper";
-                
-                var messageDate = document.createElement("div");
-                messageDate.className = "message-time-sent";
-                const currentDate = new Date();
-                messageDate.innerText = currentDate.toLocaleTimeString();
-                messageItem.append(messageDate);
-
-                var messageAuthor = document.createElement("div");
-                messageAuthor.className = "message-author";
-                messageAuthor.innerText = username;
-                messageItem.append(messageAuthor);
-
-                var messageContent = document.createElement("div");
-                messageContent.className = "message-content";
-                messageContent.innerText = msg;
-                messageItem.append(messageContent);
-
-                messages.append(messageItem);
-                window.scrollTo(0, document.body.scrollHeight);
+            socket.on("disconnect user", function(data) {
+                console.log("Disconnecting user message receieved");
+                console.log("SID: " + data.sid);
+                disconnectMessageReceived = true;
+                socket.emit("leave room", [roomID, data.sid]);
             });
+
+            socket.on("leave message", function() {
+                sendMessage("", "A user has left the chat", "left");
+            });
+
+            socket.on("chat message", function(data) {
+                sendMessage(data.username, data.message, "left");
+            });
+
         </script>
     </body>
 </html>

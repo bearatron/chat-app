@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/homepage-styles.css">
+        <title>Home</title>
+    </head>
+    <body>
+        <div class="heading-wrapper">
+            <div class="heading-text">
+                <h1>The future of chatting</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident quo voluptate earum quis blanditiis excepturi expedita assumenda possimus asperiores, fugiat suscipit eius velit aliquam quisquam, consequatur error culpa sapiente rem!</p>
+            </div>
+            <div class="heading-visual">
+                <div class="chatbox-example" id="chatbox-left">
+                    <p>Hey, do you want to go to the movies tonight?</p>
+                </div>
+                <div class="chatbox-example" id="chatbox-right">
+                    <p>Yeah sure, see you there!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="join-room-wrapper">
+            <form action="" id="join-room-form">
+                <label for="room">Enter your room ID here</label>
+                <input type="text" name="room-to-join" class="input-field" id="joining-room-id" placeholder="Room ID" autocomplete="off">
+                <input type="submit" text="Join" id="join-room-button" value="Join room">
+            </form>
+        </div>
+
+        <div class="make-room-wrapper">
+            <form action="" id="make-room-form">
+                <input type="submit" text="Create a room!" id="make-room-button" value="Create a room!">
+            </form>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+        <script>
+            var socket = io();
+            var form = document.getElementById("make-room-form")
+            var roomInput = document.getElementById("room-id-input");
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                socket.emit("make room");
+
+            });
+
+            socket.on("redirect", function(data) {
+                window.location = data.url;
+            });
+
+        </script>
+    </body>
+</html>
