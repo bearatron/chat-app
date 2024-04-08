@@ -2,6 +2,8 @@
 
 A simple localhost chat app made with flask and socket.io
 
+![A demo of two people chatting](/screenshot.png)
+
 ## Setup
 
 1. Install dependencies - `pip install -r requirements.txt`
