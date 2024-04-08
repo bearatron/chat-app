@@ -1,211 +1,216 @@
 @font-face {
-    font-family: "Maven Pro Bold";
-    src: url("/static/fonts/Maven_Pro/static/MavenPro-Bold.ttf");
+  font-family: "Maven Pro Bold";
+  src: url("/static/fonts/Maven_Pro/static/MavenPro-Bold.ttf");
 }
 
 @font-face {
-    font-family: "Maven Pro";
-    src: url("/static/fonts/Maven_Pro/MavenPro-VariableFont_wght.ttf");
+  font-family: "Maven Pro";
+  src: url("/static/fonts/Maven_Pro/MavenPro-VariableFont_wght.ttf");
 }
 
 @font-face {
-    font-family: "Open Sans Light";
-    src: url("/static/fonts/Open_Sans/static/OpenSans/OpenSans-Light.ttf");
+  font-family: "Open Sans Light";
+  src: url("/static/fonts/Open_Sans/static/OpenSans/OpenSans-Light.ttf");
 }
 
 @font-face {
-    font-family: "Open Sans";
-    src: url("/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf");
+  font-family: "Open Sans";
+  src: url("/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf");
 }
 
 ::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 
 ::-webkit-scrollbar-track {
-    border-radius: 1rem;
+  border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(136, 136, 136);
-    border-radius: 1rem;
+  background: rgb(136, 136, 136);
+  border-radius: 1rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgb(85, 85, 85);
+  background: rgb(85, 85, 85);
 }
 
 :root {
-    --max-line-height: 2.5em;
-    --light-blue: rgb(239, 241, 255);
+  --max-line-height: 2.5em;
+  --light-blue: rgb(239, 241, 255);
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    /* overflow: hidden; */
-    min-height: 100vh;
-    font-size: 1rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: column nowrap;
-    background-color: rgb(235, 237, 247);
+  margin: 0;
+  /* overflow: hidden; */
+  min-height: 100vh;
+  font-size: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: rgb(235, 237, 247);
 }
 
 h1 {
-    font-family: "Maven Pro Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Maven Pro Bold", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-p, label {
-    font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+p,
+label {
+  font-family: "Open Sans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 #messages {
-    padding: 0;
-    align-self: stretch;
-    flex-grow: 100;
+  padding: 0;
+  align-self: stretch;
+  flex-grow: 100;
 }
 
 .message-wrapper {
-    background-color: rgba(0, 0, 0, 0);
-    display: flex;
-    flex-flow: column nowrap;
-    column-gap: 0.5em;
-    padding: 0.45em 0.7em;
-    font-size: 1em;
-    transition: background-color 100ms;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  flex-flow: column nowrap;
+  column-gap: 0.5em;
+  padding: 0.45em 0.7em;
+  font-size: 1em;
+  transition: background-color 100ms;
 }
 
 .message-wrapper-left-aligned {
-    align-items: flex-start;
+  align-items: flex-start;
 }
 
 .message-wrapper-right-aligned {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 .message-wrapper:hover {
-    background-color: rgba(198, 198, 228, 0.3);
+  background-color: rgba(198, 198, 228, 0.3);
 }
 
 .message-metadata {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: baseline;
-    column-gap: 0.5em;
-    width: max-content;
-    min-width: calc(1em * 8);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: baseline;
+  column-gap: 0.5em;
+  width: max-content;
+  min-width: calc(1em * 8);
 }
 
 .message-metadata-left-aligned {
-    justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .message-metadata-right-aligned {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .message-time-sent {
-    font-family: "Open Sans Light", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 0.75em;
-    min-width: max-content;
-    line-height: calc(var(--max-line-height) - 0.75em);
+  font-family: "Open Sans Light", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-size: 0.75em;
+  min-width: max-content;
+  line-height: calc(var(--max-line-height) - 0.75em);
 }
 
 .message-author {
-    font-family: "Maven Pro Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1em;
-    max-width: max-content;
-    line-height: calc(var(--max-line-height) - 1em);
-    word-break: break-word;
+  font-family: "Maven Pro Bold", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1em;
+  max-width: max-content;
+  line-height: calc(var(--max-line-height) - 1em);
+  word-break: break-word;
 }
 
 .message-content {
-    width: fit-content;
-    font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 0.9em;
-    line-height: calc(var(--max-line-height) - 1em);
-    word-break: break-word;
-    padding: 0.5em 0.75em;
-    background-color: rgba(239, 241, 255, 0.55);
-    box-shadow: 0em 0.01em 1em 0.5em rgba(213, 215, 228, 0.5);
-    backdrop-filter: blur(1em);
-    -webkit-backdrop-filter: blur(1em);
-    border: 0.1em solid rgba(255, 255, 255, 0.2);
-    border-radius: 1em;
+  width: fit-content;
+  font-family: "Open Sans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-size: 0.9em;
+  line-height: calc(var(--max-line-height) - 1em);
+  word-break: break-word;
+  padding: 0.5em 0.75em;
+  background-color: rgba(239, 241, 255, 0.55);
+  box-shadow: 0em 0.01em 1em 0.5em rgba(213, 215, 228, 0.5);
+  backdrop-filter: blur(1em);
+  -webkit-backdrop-filter: blur(1em);
+  border: 0.1em solid rgba(255, 255, 255, 0.2);
+  border-radius: 1em;
 }
 
 .message-content-left-aligned {
-    border-top-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .message-content-right-aligned {
-    border-top-right-radius: 0;
-    background-color: rgba(198, 198, 228, 0.55);
+  border-top-right-radius: 0;
+  background-color: rgba(198, 198, 228, 0.55);
 }
 
-
 .messagebox-wrapper {
-    min-height: none;
-    flex-grow: 1;
-    background-color: rgba(239, 241, 255, 0.5);
-    backdrop-filter: blur(0.2em);
-    -webkit-backdrop-filter: blur(0.2em);
-    border-top: 0.1em solid rgba(255, 255, 255, 0.2);
-    position: sticky;
-    bottom: 0;   
+  min-height: none;
+  flex-grow: 1;
+  background-color: rgba(239, 241, 255, 0.5);
+  backdrop-filter: blur(0.2em);
+  -webkit-backdrop-filter: blur(0.2em);
+  border-top: 0.1em solid rgba(255, 255, 255, 0.2);
+  position: sticky;
+  bottom: 0;
 }
 
 #message-form {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    column-gap: 0.5em;
-    padding: 1em 0.8em;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  column-gap: 0.5em;
+  padding: 1em 0.8em;
 }
 
 .input-field {
-    background-color: rgb(213, 215, 228);
-    width: 20em;
-    padding: 0.5em 0.8em;
-    border: 0;
-    border-radius: 0.5em;
-    outline: 0 solid rgba(0, 0, 0, 0);
-    font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    transition: 150ms;
+  background-color: rgb(213, 215, 228);
+  width: 20em;
+  padding: 0.5em 0.8em;
+  border: 0;
+  border-radius: 0.5em;
+  outline: 0 solid rgba(0, 0, 0, 0);
+  font-family: "Open Sans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  transition: 150ms;
 }
 
-.input-field:focus{
-    outline: 0.3em solid rgba(142, 142, 228, 0.7);
+.input-field:focus {
+  outline: 0.3em solid rgba(142, 142, 228, 0.7);
 }
 
 #usernamebox {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 #messagebox {
-    flex-grow: 8;
+  flex-grow: 8;
 }
 
 #send-button {
-    padding: 0.5em 0.7em;
-    font-family: "Open Sans", 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    border: 0;
-    border-radius: 0.2em;
-    outline: 0 solid rgba(0, 0, 0, 0);
-    background-color: rgb(213, 215, 228);
-    transition: outline 100ms, background-color 500ms;
+  padding: 0.5em 0.7em;
+  font-family: "Open Sans", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  border: 0;
+  border-radius: 0.2em;
+  outline: 0 solid rgba(0, 0, 0, 0);
+  background-color: rgb(213, 215, 228);
+  transition: outline 100ms, background-color 500ms;
 }
 
 #send-button:focus {
-    outline: 0.3em solid rgba(142, 142, 228, 0.7);
+  outline: 0.3em solid rgba(142, 142, 228, 0.7);
 }
 
 #send-button:hover {
-    background-color: rgb(180, 180, 228);
+  background-color: rgb(180, 180, 228);
 }
